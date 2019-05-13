@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "SomeConfig:Url": "",
+    "SomeConfig2": {
+      "Url": "Blas"
+    }
+  }
+}
