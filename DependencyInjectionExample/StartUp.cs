@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 [assembly: FunctionsStartup(typeof(DependencyInjectionExample.Startup))]
 
@@ -15,9 +16,13 @@ namespace DependencyInjectionExample
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddHttpClient("test");
-          
-        }
+            builder.Services.AddHttpClient();
 
+            //builder.Services.AddHttpClient("namedClient")
+            //builder.Services.AddScoped<>();
+            //builder.Services.AddTransient<>();
+            //builder.Services.AddSingleton<>();
+        }
     }
+
 }
