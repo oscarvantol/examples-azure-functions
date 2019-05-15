@@ -1,26 +1,23 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using System.Reflection;
-using DependencyInjectionExample.Config;
+using Microsoft.Extensions.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(DependencyInjectionExample.Startup))]
 
 namespace DependencyInjectionExample
 {
+    using DependencyInjectionExample.Config;
     public class Startup : FunctionsStartup
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
             builder.Services.AddHttpClient();
+            
             builder.Services.AddOptions<ExampleSettingsConfig>()
                 .Configure<IConfiguration>((configSection, configuration) =>
                 {
+                    //Need to bind it manually to the section
+                    //Heads up, you can not use nested sections in the local.settings.json. Use the ':' in your configuration keys.
                     configuration.GetSection("ExampleTestSettings").Bind(configSection);
                 });
             
@@ -31,6 +28,4 @@ namespace DependencyInjectionExample
             //builder.Services.AddSingleton<>();
         }
     }
-
-  
 }
