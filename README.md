@@ -5,6 +5,8 @@ Using 'FunctionsStartup' for DI. The example shows how to inject the IHttpClient
 
 Based on the [Official docs](https://docs.microsoft.com/en-us/azure/azure-functions/functions-dotnet-dependency-injection)
 
+[2019-12-30 - Updated to Functions v3, .net core 3 and csharp 8.]
+
 **HttpClientFactoryWithPollyExample**
 
 Simple demonstration how to setup Polly in Azure Functions 2 to handle retries or other policies.
