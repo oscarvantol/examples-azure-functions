@@ -36,6 +36,7 @@ namespace DependencyInjectionExample
             responseMessage.EnsureSuccessStatusCode();
             _ = await responseMessage.Content.ReadAsStringAsync();
 
+
             return new OkResult();
         }
     }
