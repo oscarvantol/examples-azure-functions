@@ -1,4 +1,14 @@
 # examples-azure-functions
+
+**AppConfigurationExample**
+
+An example to add Azure App Configuation to Azure Functions using the FunctionsStartup. This example also configures Azure Key Vault for Key Vault reference usages and assumes using Azure.Identity, therefore the configuration only needs en endpoint. No secrets at all!
+
+*Note: The configuration that you need for your triggers and bindings should cannot be used from appconfiguration because it is needed by the Azure Functions platform to for e.g. determine scaling.*
+
+
+[AppConfiguration Example Project](tree/master/AppConfigurationExample/AppConfigurationExample)
+
 **DependencyInjectionExample**
 
 Using 'FunctionsStartup' for DI. The example shows how to inject the IHttpClientFactory and setting up configuration using both IConfiguration and IOptions.
