@@ -7,8 +7,6 @@ An example to add Azure App Configuation to Azure Functions using the FunctionsS
 *Note: The configuration that you need for your triggers and bindings should cannot be used from appconfiguration because it is needed by the Azure Functions platform to for e.g. determine scaling.*
 
 
-[AppConfiguration Example Project](tree/master/AppConfigurationExample/AppConfigurationExample)
-
 **DependencyInjectionExample**
 
 Using 'FunctionsStartup' for DI. The example shows how to inject the IHttpClientFactory and setting up configuration using both IConfiguration and IOptions.
