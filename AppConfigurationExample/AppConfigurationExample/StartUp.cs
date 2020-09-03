@@ -1,6 +1,7 @@
 ﻿using System;
 using Azure.Identity;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -10,14 +11,13 @@ namespace AppConfigurationExample
 {
     public class StartUp : FunctionsStartup
     {
-        public override void Configure(IFunctionsHostBuilder builder)
+        public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
         {
             //get the original configuration
-            var tmpConfig = GetConfiguration(builder);
+            var tmpConfig = builder.ConfigurationBuilder.Build();
 
             // create a new configurationbuilder and add appconfiguration
-            var configBuilder = new ConfigurationBuilder();
-            configBuilder.AddAzureAppConfiguration((options) =>
+            builder.ConfigurationBuilder.AddAzureAppConfiguration((options) =>
             {
                 var defaultAzureCredential = GetDefaultAzureCredential();
 
@@ -33,18 +33,9 @@ namespace AppConfigurationExample
                 // options.Select(KeyFilter.Any, LabelFilter.Null);
             });
 
-            // you configure other configuration sources here
-            configBuilder.AddEnvironmentVariables();
-
-            // replace
-            builder.Services.RemoveAll<IConfiguration>();
-            builder.Services.AddSingleton<IConfiguration>(configBuilder.Build());
-
-            // continue the normal setup
-            ConfigureServices(builder.Services);
         }
 
-        private void ConfigureServices(IServiceCollection services)
+        public override void Configure(IFunctionsHostBuilder builder)
         {
             //services.AddOptions<ExampleSettingsConfig>()
             // .Configure<IConfiguration>((configSection, configuration) =>
@@ -58,9 +49,6 @@ namespace AppConfigurationExample
             //builder.Services.AddSingleton<>();
         }
 
-        private IConfiguration GetConfiguration(IFunctionsHostBuilder builder) =>
-            builder.Services.BuildServiceProvider().GetService<IConfiguration>();
-
         private DefaultAzureCredential GetDefaultAzureCredential() => new DefaultAzureCredential(new DefaultAzureCredentialOptions
         {
             //be explicit about this to prevent frustration
@@ -73,6 +61,5 @@ namespace AppConfigurationExample
             ExcludeEnvironmentCredential = true,
             ExcludeVisualStudioCredential = true
         });
-
     }
 }
