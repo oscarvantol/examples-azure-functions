@@ -13,15 +13,14 @@ namespace AppConfigurationExample
     {
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
         {
-            //get the original configuration
-            var tmpConfig = builder.ConfigurationBuilder.Build();
+            var config = builder.GetContext().Configuration;
 
             // create a new configurationbuilder and add appconfiguration
             builder.ConfigurationBuilder.AddAzureAppConfiguration((options) =>
             {
                 var defaultAzureCredential = GetDefaultAzureCredential();
 
-                options.Connect(new Uri(tmpConfig["AppConfigUrl"]), defaultAzureCredential)
+                options.Connect(new Uri(config["AppConfigUrl"]), defaultAzureCredential)
                 // also setup key vault for key vault references
                     .ConfigureKeyVault(kvOptions =>
                     {
