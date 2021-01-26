@@ -7,7 +7,8 @@ on:
     branches: [ main ]
 
 jobs:    
-  build:
+  build_and_test:
+    name: Build and Test
     runs-on: ubuntu-latest         
     steps:
     - uses: actions/checkout@v2
@@ -15,14 +16,22 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.x
+    - name: select project
+      run: cd AppConfigurationExample
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: publish
+      run: dotnet publish --no-build
+    - name: help
+      run: find . -name \*.zip
   
   deploy_staging:
+    name: Deploy to staging environment
+    needs: [build_and_test]
     environment: staging
     runs-on: ubuntu-latest
     steps:
@@ -30,6 +39,8 @@ jobs:
         name: deploying to staging
         
   deploy_production:
+    name: Deploy to production environment
+    needs: [deploy_staging]
     environment: production
     runs-on: ubuntu-latest
     steps:
