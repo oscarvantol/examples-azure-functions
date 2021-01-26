@@ -21,13 +21,15 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore -c Release
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal -c Release
     - name: publish
-      run: dotnet publish --no-build
-    - name: help
-      run: find . -name \*.zip
+      run: dotnet publish --no-build -c Release
+    - uses: actions/upload-artifact@v2
+      with:
+        name: drop
+        path: /**/publish/*
   
   deploy_staging:
     name: Deploy to staging environment
@@ -35,6 +37,11 @@ jobs:
     environment: staging
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: drop
+      - name: Display structure of downloaded files
+        run: ls -R
       - run: echo "test on staging"
         name: deploying to staging
         
