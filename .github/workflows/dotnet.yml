@@ -22,16 +22,19 @@ jobs:
     - name: Build
       run: dotnet build --no-restore -c Release
       working-directory: AppConfigurationExample
-    - name: Test
-      run: dotnet test --no-build --verbosity normal -c Release
-      working-directory: AppConfigurationExample
+#    - name: Test
+#      run: dotnet test --no-build --verbosity normal -c Release
+#      working-directory: AppConfigurationExample
     - name: publish
       run: dotnet publish --no-build -c Release
+      working-directory: AppConfigurationExample
+    - name: Display structure of dir
+      run: ls -R
       working-directory: AppConfigurationExample
     - uses: actions/upload-artifact@v2
       with:
         name: drop
-        path: AppConfigurationExample/bin/Release/netcoreapp3.1/publish/
+        path: /**/Release/netcoreapp3.1/publish
   
   deploy_staging:
     name: Deploy to staging environment
