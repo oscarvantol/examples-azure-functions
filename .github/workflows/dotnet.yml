@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-lates
     steps:
     - name: dingdong
+      run: echo hoi
       
   build:
     runs-on: ubuntu-latest         
@@ -19,7 +20,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.x.x
+        dotnet-version: 5.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
