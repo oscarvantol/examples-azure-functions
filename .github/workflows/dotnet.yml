@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ main ]
 
-jobs:
+jobs:    
   build:
     runs-on: ubuntu-latest         
     steps:
@@ -21,4 +21,18 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+  
+  deploy_staging:
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "test on staging"
+        name: deploying to staging
+        
+  deploy_production:
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "ship it!"
+        name: deploying to production
   
