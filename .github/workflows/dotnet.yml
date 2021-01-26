@@ -34,7 +34,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: drop
-        path: /**/Release/netcoreapp3.1/publish
+        path: ./AppConfigurationExample/bin/Release/netcoreapp3.1/publish
   
   deploy_staging:
     name: Deploy to staging environment
