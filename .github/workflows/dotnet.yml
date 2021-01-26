@@ -32,7 +32,7 @@ jobs:
       with:
         name: drop
         #path: /home/runner/work/examples-azure-functions/examples-azure-functions/AppConfigurationExample/AppConfigurationExample/bin/Release/netcoreapp3.1/publish/
-        path: AppConfigurationExample/AppConfigurationExample/bin/Release/netcoreapp3.1/publish/
+        path: AppConfigurationExample/**/publish/
   
   deploy_staging:
     name: Deploy to staging environment
