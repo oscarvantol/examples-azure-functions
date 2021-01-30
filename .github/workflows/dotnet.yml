@@ -49,18 +49,18 @@ jobs:
         uses: Azure/functions-action@v1.3.1
         with:
           app-name: '${{ env.AZURE_FUNCTIONAPP_NAME }}-staging'
-          package: ./
+          package: /home/runner/work/examples-azure-functions/examples-azure-functions
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}  
         
-  deploy_production:
-    name: Deploy to production environment
-    needs: [deploy_staging]
-    environment: production
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: app_pkg
-      - run: echo "ship it!"
-        name: deploying to production
+# deploy_production:
+#   name: Deploy to production environment
+#   needs: [deploy_staging]
+#   environment: production
+#   runs-on: ubuntu-latest
+#   steps:
+#     - uses: actions/download-artifact@v2
+#       with:
+#         name: app_pkg
+#     - run: echo "ship it!"
+#       name: deploying to production
   
