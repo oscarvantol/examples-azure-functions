@@ -34,7 +34,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: app_pkg
-        path: AppConfigurationExample/**/publish/
+        path: ./AppConfigurationExample/bin/Release/netcoreapp3.1/publish/
   
   deploy_staging:
     name: Deploy to staging environment
@@ -49,7 +49,7 @@ jobs:
         uses: Azure/functions-action@v1.3.1
         with:
           app-name: '${{ env.AZURE_FUNCTIONAPP_NAME }}-staging'
-          package: AppConfigurationExample/**/publish/
+          package: ./AppConfigurationExample/bin/Release/netcoreapp3.1/publish/
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}  
         
 # deploy_production:
