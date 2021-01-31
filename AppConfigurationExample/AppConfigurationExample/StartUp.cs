@@ -13,7 +13,7 @@ namespace AppConfigurationExample
     {
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
         {
-            var config = builder.GetContext().Configuration;
+            var config = builder.ConfigurationBuilder.Build();
 
             // create a new configurationbuilder and add appconfiguration
             builder.ConfigurationBuilder.AddAzureAppConfiguration((options) =>
