@@ -54,7 +54,7 @@ jobs:
         
 
   deploy_production:
-    name: Deploy to staging environment
+    name: Deploy to production environment
     needs: [build_and_test]
     environment: production
     runs-on: ubuntu-latest
