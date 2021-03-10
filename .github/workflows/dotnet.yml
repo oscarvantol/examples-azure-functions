@@ -1,0 +1,72 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  AZURE_FUNCTIONAPP_NAME: example-appconfig
+
+jobs:    
+  build_and_test:
+    name: Build and Test
+    runs-on: ubuntu-latest         
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: AppConfigurationExample
+    - name: Build
+      run: dotnet build --no-restore -c Release
+      working-directory: AppConfigurationExample
+    - name: Test
+      run: dotnet test --no-build --verbosity normal -c Release
+      working-directory: AppConfigurationExample
+    - name: publish
+      run: dotnet publish --no-build -c Release
+      working-directory: AppConfigurationExample
+    - uses: actions/upload-artifact@v2
+      with:
+        name: app_pkg
+        path: AppConfigurationExample/**/publish/
+  
+  deploy_staging:
+    name: Deploy to staging environment
+    needs: [build_and_test]
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: app_pkg
+      - name: 'Run Azure Functions Action'
+        uses: Azure/functions-action@v1.3.1
+        with:
+          app-name: '${{ env.AZURE_FUNCTIONAPP_NAME }}-staging'
+          package: ./AppConfigurationExample/bin/Release/netcoreapp3.1/publish/
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}  
+        
+
+  deploy_production:
+    name: Deploy to staging environment
+    needs: [build_and_test]
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: app_pkg
+      - name: 'Run Azure Functions Action'
+        uses: Azure/functions-action@v1.3.1
+        with:
+          app-name: '${{ env.AZURE_FUNCTIONAPP_NAME }}-staging'
+          package: ./AppConfigurationExample/bin/Release/netcoreapp3.1/publish/
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}  
+
+ 
