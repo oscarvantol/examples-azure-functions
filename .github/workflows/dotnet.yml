@@ -8,7 +8,6 @@ on:
 
 env:
   AZURE_FUNCTIONAPP_NAME: example-appconfig
-
 jobs:    
   build_and_test:
     name: Build and Test
